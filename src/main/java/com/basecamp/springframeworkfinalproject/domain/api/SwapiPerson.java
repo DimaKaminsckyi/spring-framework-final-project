@@ -1,4 +1,4 @@
-package com.basecamp.springframeworkfinalproject.domain;
+package com.basecamp.springframeworkfinalproject.domain.api;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
@@ -11,5 +11,9 @@ public class SwapiPerson {
 
     private String name;
 
+    private String url;
+
     private String[] starships;
+
+    private String[] vehicles;
 }

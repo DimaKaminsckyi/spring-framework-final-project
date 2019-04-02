@@ -1,9 +1,9 @@
 package com.basecamp.springframeworkfinalproject.service.impl;
 
-import com.basecamp.springframeworkfinalproject.domain.Person;
-import com.basecamp.springframeworkfinalproject.domain.Starship;
-import com.basecamp.springframeworkfinalproject.domain.SwapiPerson;
-import com.basecamp.springframeworkfinalproject.domain.SwapiSearch;
+import com.basecamp.springframeworkfinalproject.domain.*;
+import com.basecamp.springframeworkfinalproject.domain.api.SwapiPerson;
+import com.basecamp.springframeworkfinalproject.domain.api.SwapiSearch;
+import com.basecamp.springframeworkfinalproject.exception.PersonNotFoundException;
 import com.basecamp.springframeworkfinalproject.service.SwapiService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -23,11 +22,9 @@ public class SwapiServiceImpl implements SwapiService {
 
     private final RestTemplate restTemplate;
 
-
     @Override
-    public Person getFromAPI(String personName) {
+    public Person getPersonFromAPI(String personName) {
         String swapiPersonURL = "https://swapi.co/api/people/?search=" + personName;
-        List<Starship> starships;
         Person person = new Person();
 
         SwapiSearch swapiSearch = restTemplate.getForObject(
@@ -37,26 +34,49 @@ public class SwapiServiceImpl implements SwapiService {
 
         for (SwapiPerson p : swapiSearch.getResults()){
             if (p.getName().equals(personName)){
-                starships = getStarshipFromAPI(p);
-                person.setStarships(starships);
                 person.setName(p.getName());
-                log.info(String.valueOf(person));
+                person.setStarships(getStarshipFromAPI(p));
+                person.setVehicles(getVehicleFromAPI(p));
                 return person;
             }
         }
 
-        throw new NoSuchElementException("error");
+        throw new PersonNotFoundException("please enter correct person name");
     }
 
     @Override
     public List<Starship> getStarshipFromAPI(SwapiPerson swapiPerson) {
         List<Starship> starships = new ArrayList<>();
+        Starship starship;
         for (String s : swapiPerson.getStarships()){
-            starships.add(restTemplate.getForObject(s , Starship.class));
 
+            starship = restTemplate.getForObject(s , Starship.class);
+
+            if (starship.getCost().equals("unknown")){
+                starship.setCost("0");
+            }
+
+            starships.add(starship);
         }
-        log.info("Starships of Person : " + starships);
+
         return starships;
+    }
+
+    @Override
+    public List<Vehicle> getVehicleFromAPI(SwapiPerson swapiPerson) {
+        List<Vehicle> vehicles = new ArrayList<>();
+        Vehicle vehicle;
+        for (String s : swapiPerson.getVehicles()){
+
+            vehicle = restTemplate.getForObject(s , Vehicle.class);
+
+            if (vehicle.getCost().equals("unknown")){
+                vehicle.setCost("0");
+            }
+
+            vehicles.add(vehicle);
+        }
+        return vehicles;
     }
 
 

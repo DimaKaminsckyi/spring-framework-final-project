@@ -12,16 +12,20 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Starship {
+public class Vehicle {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "starship_id")
-    private int starshipId;
+    @Column(name = "vehicle_id")
+    private int vechicleId;
 
     @JsonProperty("name")
     @Column
     private String name;
+
+    @JsonProperty("model")
+    @Column
+    private String model;
 
     @JsonProperty("cost_in_credits")
     @Column
@@ -29,7 +33,7 @@ public class Starship {
 
     @JsonProperty("max_atmosphering_speed")
     @Column
-    private Integer speed;
+    private int speed;
 
     @JsonBackReference
     @ManyToOne
