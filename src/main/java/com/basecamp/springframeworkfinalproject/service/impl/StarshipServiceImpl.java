@@ -28,14 +28,13 @@ public class StarshipServiceImpl implements StarshipService {
                 max(comp).get();
     }
 
-    @Override
-    public Starship findById(int id) {
+    public Starship findById(int id){
         return starshipRepository.findById(id).get();
     }
 
-    @Override
-    public List<Starship> findAll() {
-        List<Starship> starships = (List<Starship>) starshipRepository.findAll();
-        return starships;
+    public List<Starship> findAll(){
+        return starshipRepository.findAll();
     }
+
+
 }

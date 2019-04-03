@@ -1,4 +1,4 @@
-package com.basecamp.springframeworkfinalproject;
+package com.basecamp.springframeworkfinalproject.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

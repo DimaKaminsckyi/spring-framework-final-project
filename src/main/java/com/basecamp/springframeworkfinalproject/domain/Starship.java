@@ -15,7 +15,6 @@ import javax.persistence.*;
 public class Starship {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "starship_id")
     private int starshipId;
 

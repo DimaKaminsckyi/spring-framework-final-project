@@ -1,8 +1,6 @@
 package com.basecamp.springframeworkfinalproject.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -39,15 +37,18 @@ public class Person {
     private List<Vehicle> vehicles;
 
     public void addStarship(Starship starship) {
-        this.starships.clear();
         this.starships.add(starship);
         starship.setPerson(this);
     }
 
     public void addVehicle(Vehicle vehicle) {
-        this.starships.clear();
         this.vehicles.add(vehicle);
         vehicle.setPerson(this);
+    }
+
+    public void clearLists(){
+        this.vehicles.clear();
+        this.starships.clear();
     }
 
 }

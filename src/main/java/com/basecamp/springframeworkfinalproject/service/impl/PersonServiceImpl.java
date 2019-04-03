@@ -42,6 +42,7 @@ public class PersonServiceImpl implements PersonService {
                         " http://localhost:8080/vehicle/{fastest/expensive}/" + personName);
 
         }
+        person.clearLists();
         person.addVehicle(vehicle);
         personRepository.save(person);
 
@@ -65,6 +66,7 @@ public class PersonServiceImpl implements PersonService {
                         " http://localhost:8080/starship/{fastest/expensive}/" + personName);
 
         }
+        person.clearLists();
         person.addStarship(starship);
         personRepository.save(person);
 
@@ -73,8 +75,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findAll() {
-        List<Person> persons = (List<Person>) personRepository.findAll();
-        return persons;
+        return (List<Person>) personRepository.findAll();
     }
 
 

@@ -35,6 +35,8 @@ public class SwapiServiceImpl implements SwapiService {
         for (SwapiPerson p : swapiSearch.getResults()){
             if (p.getName().equals(personName)){
                 person.setName(p.getName());
+                person.setPersonId(Integer.valueOf(p.getUrl().
+                        replaceAll("\\D+","")));
                 person.setStarships(getStarshipFromAPI(p));
                 person.setVehicles(getVehicleFromAPI(p));
                 return person;
@@ -51,6 +53,8 @@ public class SwapiServiceImpl implements SwapiService {
         for (String s : swapiPerson.getStarships()){
 
             starship = restTemplate.getForObject(s , Starship.class);
+            starship.setStarshipId(Integer.valueOf(s.
+                    replaceAll("\\D+","")));
 
             if (starship.getCost().equals("unknown")){
                 starship.setCost("0");
@@ -69,6 +73,8 @@ public class SwapiServiceImpl implements SwapiService {
         for (String s : swapiPerson.getVehicles()){
 
             vehicle = restTemplate.getForObject(s , Vehicle.class);
+            vehicle.setVechicleId(Integer.valueOf(s.
+                    replaceAll("\\D+","")));
 
             if (vehicle.getCost().equals("unknown")){
                 vehicle.setCost("0");
