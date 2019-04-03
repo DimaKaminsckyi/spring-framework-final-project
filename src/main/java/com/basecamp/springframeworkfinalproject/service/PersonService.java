@@ -9,9 +9,8 @@ public interface PersonService {
 
     Person saveMachineResult(String kindOfMachine , String state , String personName);
 
+    String calculateResponse(UUID uuid);
+
     List<Person> findAll();
-
-    Person findByUUId(UUID uuid);
-
 
 }

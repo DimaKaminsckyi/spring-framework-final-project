@@ -4,6 +4,7 @@ import com.basecamp.springframeworkfinalproject.domain.*;
 import com.basecamp.springframeworkfinalproject.domain.api.SwapiPerson;
 import com.basecamp.springframeworkfinalproject.domain.api.SwapiSearch;
 import com.basecamp.springframeworkfinalproject.exception.InvalidMachineRequestException;
+import com.basecamp.springframeworkfinalproject.exception.PersonDoesNotHaveStarshipOrVehicleException;
 import com.basecamp.springframeworkfinalproject.exception.PersonNotFoundException;
 import com.basecamp.springframeworkfinalproject.service.SwapiService;
 import lombok.RequiredArgsConstructor;
@@ -65,7 +66,6 @@ public class SwapiServiceImpl implements SwapiService {
 
             machines.add(machine);
         }
-        log.info("Machines" + machines);
         return machines;
     }
 
@@ -81,7 +81,8 @@ public class SwapiServiceImpl implements SwapiService {
             default:
                 throw new InvalidMachineRequestException("please enter starship or vehicle for request");
         }
-        log.info(String.valueOf(array));
+        if (array.length == 0){throw new PersonDoesNotHaveStarshipOrVehicleException(
+                "person does not have starship or vehicle");}
         return array;
     }
 
