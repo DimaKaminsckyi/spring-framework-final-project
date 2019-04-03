@@ -5,8 +5,8 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
 @Setter
+@Getter
 public class SaveResponse {
 
     private UUID id;

@@ -12,19 +12,21 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-public class Vehicle {
+public class Machine {
 
     @Id
-    @Column(name = "vehicle_id")
-    private int vechicleId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "machine_id")
+    private int machineId;
+
+    @Column(name = "kind_of_machine")
+    private String kindOfMachine;
 
     @JsonProperty("name")
     @Column
     private String name;
-
-    @JsonProperty("model")
-    @Column
-    private String model;
 
     @JsonProperty("cost_in_credits")
     @Column
@@ -32,7 +34,7 @@ public class Vehicle {
 
     @JsonProperty("max_atmosphering_speed")
     @Column
-    private int speed;
+    private Integer speed;
 
     @JsonBackReference
     @ManyToOne

@@ -1,10 +1,7 @@
 package com.basecamp.springframeworkfinalproject.controller;
 
 import com.basecamp.springframeworkfinalproject.domain.Person;
-import com.basecamp.springframeworkfinalproject.domain.Starship;
 import com.basecamp.springframeworkfinalproject.service.PersonService;
-import com.basecamp.springframeworkfinalproject.service.StarshipService;
-import com.basecamp.springframeworkfinalproject.wire.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +18,9 @@ public class SwapiController {
 
     private final PersonService personService;
 
-    @GetMapping("/person/{uuid}")
+    @GetMapping("/{uuid}")
     public ResponseEntity<Person> getPerson(@PathVariable UUID uuid){
+        Person person = personService.findByUUId(uuid);
         return new ResponseEntity<>(personService.findByUUId(uuid) , HttpStatus.OK);
     }
 

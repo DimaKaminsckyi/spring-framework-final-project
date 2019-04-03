@@ -16,4 +16,7 @@ public class SwapiPerson {
     private String[] starships;
 
     private String[] vehicles;
+
+    private String kindOfMachine;
+
 }

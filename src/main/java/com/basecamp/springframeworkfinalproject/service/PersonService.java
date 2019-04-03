@@ -7,9 +7,7 @@ import java.util.UUID;
 
 public interface PersonService {
 
-    Person saveVehicleResult(String personName , String state);
-
-    Person saveStarshipResult(String personName , String state);
+    Person saveMachineResult(String kindOfMachine , String state , String personName);
 
     List<Person> findAll();
 

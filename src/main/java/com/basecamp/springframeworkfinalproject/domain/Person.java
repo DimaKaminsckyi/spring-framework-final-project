@@ -28,27 +28,19 @@ public class Person {
     @Column
     private String name;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "person" , cascade = CascadeType.ALL)
-    private List<Starship> starships;
+    @Column
+    private String response;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "person" , cascade = CascadeType.ALL)
-    private List<Vehicle> vehicles;
+    private List<Machine> machines;
 
-    public void addStarship(Starship starship) {
-        this.starships.add(starship);
-        starship.setPerson(this);
+    public void addMachine(Machine machine) {
+        this.machines.clear();
+        this.machines.add(machine);
+        machine.setPerson(this);
     }
 
-    public void addVehicle(Vehicle vehicle) {
-        this.vehicles.add(vehicle);
-        vehicle.setPerson(this);
-    }
 
-    public void clearLists(){
-        this.vehicles.clear();
-        this.starships.clear();
-    }
 
 }

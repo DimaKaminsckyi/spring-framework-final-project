@@ -5,12 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SwapiSearch {
 
     private Integer count;
 
     private SwapiPerson[] results;
+
 
 }
