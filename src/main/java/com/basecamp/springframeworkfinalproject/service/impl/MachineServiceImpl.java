@@ -28,10 +28,4 @@ public class MachineServiceImpl implements MachineService {
                 max(comp).get();
     }
 
-    @Override
-    public Machine findById(int id) {
-        return machineRepository.findById(id).get();
-    }
-
-
 }

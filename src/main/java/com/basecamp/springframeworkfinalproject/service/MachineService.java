@@ -10,6 +10,4 @@ public interface MachineService {
 
     Machine countMostExpensiveMachine(List<Machine> machines);
 
-    Machine findById(int id);
-
 }

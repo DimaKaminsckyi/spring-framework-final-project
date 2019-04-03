@@ -5,11 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
@@ -36,5 +33,11 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorDetails> invalidMachineRequestException(InvalidMachineRequestException ex) {
         ErrorDetails exception = new ErrorDetails(400, ex.getMessage());
         return ResponseEntity.badRequest().body(exception);
+    }
+
+    @ExceptionHandler(UuidResultNotFoundException.class)
+    public ResponseEntity<ErrorDetails> uuidNotFoundException(UuidResultNotFoundException ex) {
+        ErrorDetails exception = new ErrorDetails(404, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception);
     }
 }
