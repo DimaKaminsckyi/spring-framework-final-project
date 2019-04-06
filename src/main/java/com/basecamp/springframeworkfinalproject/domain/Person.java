@@ -29,7 +29,7 @@ public class Person {
     private String name;
 
     @Column
-    private String response;
+    private String state;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "person" , cascade = CascadeType.ALL)

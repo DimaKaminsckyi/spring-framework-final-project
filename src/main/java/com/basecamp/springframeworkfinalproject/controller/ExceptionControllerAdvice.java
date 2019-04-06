@@ -1,4 +1,4 @@
-package com.basecamp.springframeworkfinalproject.exception.advice;
+package com.basecamp.springframeworkfinalproject.controller;
 
 import com.basecamp.springframeworkfinalproject.exception.*;
 import org.springframework.http.HttpStatus;

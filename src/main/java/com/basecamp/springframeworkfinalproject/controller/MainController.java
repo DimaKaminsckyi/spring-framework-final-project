@@ -7,11 +7,9 @@ import com.basecamp.springframeworkfinalproject.wire.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -22,9 +20,9 @@ public class MainController {
     private final PersonService personService;
 
     @PostMapping("/{kindOfMachine}/{state}/{personName}")
-    public ResponseEntity<SaveResponse> saveMachinelResult(@PathVariable String kindOfMachine ,
-                                                           @PathVariable String state ,
-                                                           @PathVariable String personName){
+    public ResponseEntity<SaveResponse> saveMachineResult(@PathVariable String kindOfMachine ,
+                                                          @PathVariable String state ,
+                                                          @PathVariable String personName){
 
         Person person = personService.saveMachineResult( kindOfMachine  , state , personName);
 
@@ -44,6 +42,28 @@ public class MainController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+    @GetMapping("/fastest/result")
+    public ResponseEntity<List<Person>> getAllFastestResult(){
+        return ResponseEntity.ok(personService.getAllUuidByStateResult("fastest"));
+    }
+
+
+    @GetMapping("/expensive/result")
+    public ResponseEntity<List<Person>> getAllExpensiveResult(){
+        return ResponseEntity.ok(personService.getAllUuidByStateResult("expensive"));
+    }
+
+    @GetMapping(params = { "page", "size" })
+    public ResponseEntity<List<Person>> findPaginated(@RequestParam(value = "page" ,defaultValue = "0") int page,
+                                   @RequestParam(value = "size" , defaultValue = "5") int size) {
+
+         List<Person> personList = personService.findAllPagination(page , size);
+
+        return ResponseEntity.ok().body(personList);
+    }
+
+
 
 
 }

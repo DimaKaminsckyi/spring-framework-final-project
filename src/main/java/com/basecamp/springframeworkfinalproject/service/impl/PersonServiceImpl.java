@@ -1,14 +1,16 @@
 package com.basecamp.springframeworkfinalproject.service.impl;
 
-import com.basecamp.springframeworkfinalproject.domain.Person;
 import com.basecamp.springframeworkfinalproject.domain.Machine;
+import com.basecamp.springframeworkfinalproject.domain.Person;
 import com.basecamp.springframeworkfinalproject.exception.InvalidStateException;
 import com.basecamp.springframeworkfinalproject.exception.UuidResultNotFoundException;
 import com.basecamp.springframeworkfinalproject.repository.PersonRepository;
-import com.basecamp.springframeworkfinalproject.service.PersonService;
 import com.basecamp.springframeworkfinalproject.service.MachineService;
+import com.basecamp.springframeworkfinalproject.service.PersonService;
 import com.basecamp.springframeworkfinalproject.service.SwapiService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,7 +45,7 @@ public class PersonServiceImpl implements PersonService {
         }
 
         person.addMachine(machine);
-        person.setResponse(state);
+        person.setState(state);
 
         personRepository.save(person);
 
@@ -60,7 +62,7 @@ public class PersonServiceImpl implements PersonService {
         sb.append(person.getName() + '(' + person.getPersonId() + ')' + " was driving " +
                 '(' + machine.getKindOfMachine() + ')' +machine.getName() + '(' + machine.getMachineId() + ')');
 
-        switch (person.getResponse()){
+        switch (person.getState()){
             case "expensive":
                 sb.append(" and it cost " + machine.getCost());
                 break;
@@ -84,9 +86,19 @@ public class PersonServiceImpl implements PersonService {
 
 
     @Override
-    public List<Person> findAll() {
-        return (List<Person>) personRepository.findAll();
+    public List<Person> findAllPagination(int page , int size) {
+        Pageable pageable = PageRequest.of(page , size);
+        return personRepository.findAllUsersWithPagination(pageable).getContent();
     }
 
-
+    @Override
+    public List<Person> getAllUuidByStateResult(String state) {
+        List<Person> personList;
+        try {
+            personList = personRepository.getAllUuidByStateResult(state);
+        }catch (NoSuchElementException e){
+            throw new UuidResultNotFoundException("you do not have any entries in database yet");
+        }
+        return personList;
+    }
 }

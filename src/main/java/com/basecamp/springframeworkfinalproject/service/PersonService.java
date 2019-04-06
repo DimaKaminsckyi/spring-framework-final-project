@@ -11,6 +11,8 @@ public interface PersonService {
 
     String calculateResponse(UUID uuid);
 
-    List<Person> findAll();
+    List<Person> findAllPagination(int page , int size);
+
+    List<Person> getAllUuidByStateResult(String state);
 
 }
