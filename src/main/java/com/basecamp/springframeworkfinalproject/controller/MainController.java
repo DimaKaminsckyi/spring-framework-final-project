@@ -7,13 +7,16 @@ import com.basecamp.springframeworkfinalproject.wire.SaveResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.UUID;
 
 
 @RestController
+@Validated
 @RequiredArgsConstructor
 public class MainController {
 
@@ -55,11 +58,10 @@ public class MainController {
     }
 
     @GetMapping(params = { "page", "size" })
-    public ResponseEntity<List<Person>> findPaginated(@RequestParam(value = "page" ,defaultValue = "0") int page,
-                                   @RequestParam(value = "size" , defaultValue = "5") int size) {
+    public ResponseEntity<List<Person>> findPaginated(@RequestParam(value = "page" ,defaultValue = "0") @Min(0) int page,
+                                   @RequestParam(value = "size" , defaultValue = "5") @Min(5) int size) {
 
          List<Person> personList = personService.findAllPagination(page , size);
-
         return ResponseEntity.ok().body(personList);
     }
 
