@@ -12,8 +12,9 @@ public class MachineServiceImpl implements MachineService {
 
     @Override
     public Machine countFastestMachine(List<Machine> machines) {
+        Comparator<Machine> comp = Comparator.comparing(Machine::getSpeed);
         return machines.stream().
-        max(Comparator.comparing(Machine::getSpeed)).get();
+        max(comp).get();
     }
 
     @Override

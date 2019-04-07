@@ -26,7 +26,6 @@ public class MainController {
 
     private final PersonService personService;
 
-    //http://localhost:8080/save/starship/fastest/Luke Skywalker - example
     @ApiOperation(value = "Controller post request to api and save calculate result in db , return uuid")
     @PostMapping("/save/{kindOfMachine}/{state}/{personName}")
     public ResponseEntity<SaveResponse> saveMachineResult(@PathVariable @NotNull String kindOfMachine ,
@@ -42,8 +41,7 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    //http://localhost:8080/result/c61d23a4-12d3-4ef3-97c4-e8c80f239d64 - example
-    @ApiOperation(value = "Put UUID from saveMachineResult Controler in this Get method to see result")
+    @ApiOperation(value = "Put UUID from saveMachineResult POST Method in this Get method to see result")
     @GetMapping("/result/{uuid}")
     public ResponseEntity<ResultResponse> getResult(@PathVariable UUID uuid){
         ResultResponse response = new ResultResponse();
@@ -53,14 +51,12 @@ public class MainController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    //http://localhost:8080/fastest/result - example
     @ApiOperation(value = "View UUID and Person Name all fastest result")
     @GetMapping("/fastest/result")
     public ResponseEntity<List<Person>> getAllFastestResult(){
         return ResponseEntity.ok(personService.getAllUuidByStateResult("fastest"));
     }
 
-    //http://localhost:8080/expensive/result - example
     @ApiOperation(value = "View UUID and Person Name all expensive result")
     @GetMapping("/expensive/result")
     public ResponseEntity<List<Person>> getAllExpensiveResult(){
@@ -68,7 +64,6 @@ public class MainController {
     }
 
 
-    //http://localhost:8080/?page=0&size=5 - example
     @ApiOperation(value = "Get All person and machine with pagination")
     @GetMapping(value = "/persons",params = { "page", "size" })
     public ResponseEntity<List<Person>> findPaginated(@RequestParam(value = "page" ,defaultValue = "0") @Min(0) int page,
