@@ -2,14 +2,12 @@ package com.basecamp.springframeworkfinalproject.service.impl;
 
 import com.basecamp.springframeworkfinalproject.domain.Machine;
 import com.basecamp.springframeworkfinalproject.service.MachineService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MachineServiceImpl implements MachineService {
 
     @Override

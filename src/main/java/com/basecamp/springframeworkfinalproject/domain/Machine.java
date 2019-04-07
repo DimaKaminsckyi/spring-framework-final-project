@@ -2,6 +2,7 @@ package com.basecamp.springframeworkfinalproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,9 +19,11 @@ public class Machine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ApiModelProperty(notes = "Unique starship or vehicle id from Star Wars API")
     @Column(name = "machine_id")
     private int machineId;
 
+    @ApiModelProperty(notes = "starship or vehicle")
     @Column(name = "kind_of_machine")
     private String kindOfMachine;
 

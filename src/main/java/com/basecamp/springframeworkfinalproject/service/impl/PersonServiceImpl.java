@@ -74,7 +74,7 @@ public class PersonServiceImpl implements PersonService {
         return sb.toString();
     }
 
-    private Person findByUUId(UUID uuid) {
+    public Person findByUUId(UUID uuid) {
         Person person;
         try {
             person = personRepository.findById(uuid).get();
