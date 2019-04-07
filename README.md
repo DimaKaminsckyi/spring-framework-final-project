@@ -4,6 +4,11 @@
 Final project on BaseCamp is based on StarWarsAPI. The aim of the project was to show the fastest or most expensive starship or vehicle that person was driving ever.
 To begin with, we must take from the API the name of the character we want and then compare his starship or vehicle to the fastest or most expensive machine and save to database.
 
+In project added swagger documentation 
+```bash
+http://localhost:8080/swagger-ui.html#/
+```
+
 ### Example compare and  save to database
 ### POST
 ```bash
