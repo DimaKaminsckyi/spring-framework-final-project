@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -30,16 +29,13 @@ public class SwapiServiceTest {
     @Test
     public void whenGetPersonFromAPI_thanReturnCorrectPerson(){
         SwapiSearch swapiSearch = TestData.generateSwapiSearch();
-        List<Machine> machines = TestData.generateStarships();
-        machines.remove(1);
-        List<Machine> actualMachines = new ArrayList<>();
+        List<Machine> machines = TestData.generateMachine();
 
         when(restTemplate.getForObject("https://swapi.co/api/people/?search=Luke Skywalker", SwapiSearch.class))
                 .thenReturn(swapiSearch);
         when(restTemplate.getForObject("https://swapi.co/api/starships/22/" , Machine.class)).thenReturn(machines.get(0));
-        actualMachines.add(machines.get(0));
         Person person = TestData.generatePerson();
-        person.setMachines(actualMachines);
+        person.setMachines(machines);
 
         assertEquals(person , swapiService.getPersonFromAPI("Luke Skywalker" , "starship"));
     }

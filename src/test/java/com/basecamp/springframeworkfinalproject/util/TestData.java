@@ -19,6 +19,18 @@ public class TestData {
         return person;
     }
 
+    public static List<Machine> generateMachine(){
+        List<Machine> machines = new ArrayList<>();
+        Machine machine = new Machine();
+        machine.setCost("149999");
+        machine.setName("X-wing");
+        machine.setKindOfMachine("starship");
+        machine.setSpeed(1050);
+        machines.add(machine);
+
+        return machines;
+    }
+
     public static List<Machine> generateStarships(){
         List<Machine> machines = new ArrayList<>();
         Machine machine = new Machine();

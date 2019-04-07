@@ -2,6 +2,7 @@ package com.basecamp.springframeworkfinalproject.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 public class Person {
 
     @Id

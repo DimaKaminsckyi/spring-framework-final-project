@@ -16,11 +16,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.UUID;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest( webEnvironment = SpringBootTest.WebEnvironment.MOCK,
         classes = SpringFrameworkFinalProjectApplication.class)
@@ -56,11 +57,11 @@ public class MainControllerIntegrationTest {
 //        TestData.saveToDB(personRepository);
 //        List<Person> personList = (List<Person>) personRepository.findAll();
 //        Person person = personList.get(0);
-//        UUID uuid = person.getUuid();
-//                ResultActions result = mockMvc.perform((get("/result/" + uuid)));
+//
+//        ResultActions result = mockMvc.perform((get("/result/{uuid}" ,person.getUuid() )));
 //
 //        result.andDo(print()).andExpect(status().isOk())
-//                .andExpect(jsonPath("$.uuid").value(uuid))
+//                .andExpect(jsonPath("$.uuid").value(person.getUuid()))
 //                .andExpect(jsonPath("$.result").exists());
 //    }
 
@@ -71,7 +72,8 @@ public class MainControllerIntegrationTest {
         ResultActions result = mockMvc.perform((get("/persons" ).param("page" , "0")
                 .param("size" , "5")));
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print()).andExpect(status().isOk())
+        .andExpect(content().contentType("application/json;charset=UTF-8"));
     }
 
     @Test
@@ -101,6 +103,16 @@ public class MainControllerIntegrationTest {
 
         ResultActions result = mockMvc.perform((post("/save/{kind}/{state}/{personName}"
                 , "vehicle" , "expensive" , "Luke Skywalkerrrrrrr")));
+
+        result.andDo(print()).andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.errCode").value("NOT_FOUND"))
+                .andExpect(jsonPath("$.errMessage").exists());
+    }
+
+    @Test
+    public void giveInvalidUUID_whenGetResult_thanVerifyResponse() throws Exception {
+        UUID uuid = UUID.randomUUID();
+        ResultActions result = mockMvc.perform((get("/result/{uuid}" ,uuid )));
 
         result.andDo(print()).andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.errCode").value("NOT_FOUND"))
